@@ -1,22 +1,17 @@
-import java.util.Scanner;
-public class Queue{
-    int[] data = new int[1000];
-    int head, tail, size;
-    public void add(int x) {
-        data[tail++] = x;
-        tail %= data.length;
-        size++;
+public class Stack{
+    // private表示只有這個 class的程式碼可以存取
+    // 所以 testStack若有 s.top，則無法在 testStack中讀取
+    private int[] data = new int[1000];
+    private int top = 0;
+    public void push(int x) {
+        data[top++] = x;
     }
-    public int remove() {
-        int tmp = data[head++];
-        head %= data.length;
-        size--;
+    public int pop() {
+        return data[--top];
     }
+
+    // 檢查 top是否為空的
     public boolean isEmpty() {
-        return size == 0;
+        return top <= 0;
     }
-    public static void main(String[] argv) {
-
-    }
-
 }
