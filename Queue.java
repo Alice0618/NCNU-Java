@@ -1,12 +1,22 @@
-public class Stack{
+import java.util.Scanner;
+public class Queue{
     int[] data = new int[1000];
-    int top;
-//    public Stack() {
- //   }
-    public void push(int x) {
-        data[top++] = x;
+    int head, tail, size;
+    public void add(int x) {
+        data[tail++] = x;
+        tail %= data.length;
+        size++;
     }
-    public int pop() {
-        return data[--top];
+    public int remove() {
+        int tmp = data[head++];
+        head %= data.length;
+        size--;
     }
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    public static void main(String[] argv) {
+
+    }
+
 }
