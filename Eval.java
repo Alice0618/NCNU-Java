@@ -57,9 +57,11 @@ public class Eval{
             double a = Double.valueOf(number.pop());
             number.push(Double.toString(expp(a, b, c)));
         } else if(op.equals("reverse")) {
-            // int b = Integer.valueOf(number.pop());
-            // int a = Integer.valueOf(number.pop());
-            number.push(Integer.toString(reverse(Integer.valueOf(number.pop()))));
+            // 若遇小數則強制轉型成整數型態
+            double tmp = Double.valueOf(number.pop());
+            int x = (int)tmp;
+            number.push(Integer.toString(reverse(x)));
+            // number.push(Integer.toString(reverse(Integer.valueOf(number.pop()))));
         } else if(op.equals("factorial")) {
             // int b = Integer.valueOf(number.pop());
             // int a = Integer.valueOf(number.pop());
@@ -155,11 +157,11 @@ public class Eval{
     }
 
     public static void main(String[] argv){
-        String[] data1 = {"4", "*", "(", "2", "+", "3", ")", "+", "3", "^", "2"};
-        String[] data2 = {"199", "%", "10", "-", "-1", "+", "expp", "5", "3", "2"};
-        String[] data3 = {"reverse", "200", "*", "factorial", "5", "/", "(", "10", "%", "6", ")", "-", "8"};
-        String[] data4 = {"4", "-", "reverse", "123", "/", "6", "+", "37", "%", "3", "+", "45"};
-        String[] data5 = {"expp", "(", "factorial", "(", "reverse", "12", ")", ")", "2", "3"};
+        String[] data1 = {"4","*","(","2","+","3",")","+","3","^","2"};
+        String[] data2 = {"199","%","10","-","(","-1",")","+","expp","(","5",",","2",",","3",")"};
+        String[] data3 = {"reverse","(","200",")","*","factorial","(","5",")","/","(","10","%","6",")","-","8"};
+        String[] data4 = {"4","-","reverse","(","123",")","/","6","+","37","%","3","+","45","+","factorial","(","0",")"};
+        String[] data5 = {"expp", "(", "factorial", "(", "reverse", "(", "21", ")", ")", ",", "2", "+", "3", ",", "2", ")"};
         eval(data1);
         eval(data2);
         eval(data3);
