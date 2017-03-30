@@ -22,11 +22,6 @@ public class Eval{
         }
         return -1;
     }
-    // public static void output(String op,Stack_1 num){
-    //     System.out.print(num.pop()+" ");
-    //     System.out.print(num.pop()+" ");
-    //     System.out.print(op+" ");
-    // }
 
     public static void cal(String op, Stack_1 number) {
         if(op.equals("+")) {
@@ -63,39 +58,42 @@ public class Eval{
             number.push(Integer.toString(reverse(x)));
             // number.push(Integer.toString(reverse(Integer.valueOf(number.pop()))));
         } else if(op.equals("factorial")) {
-            // int b = Integer.valueOf(number.pop());
-            // int a = Integer.valueOf(number.pop());
             number.push(Double.toString(factorial(Double.valueOf(number.pop()))));
         }
     }
 
-    // function_x ^ (m / n)
-    // (x ^ (1 / n)) ^ m
-    public static double power(double x, double n) {
-        // x的 n次方為 x乘以自己 n次
-        // 1 * (x ^ n)
-        int i;
+    // 計算 x的 (m/n)次方
+    public static double expp(double x, double m, double n) {
+        return power(root(x, n), m);
+    }
+
+    // power函數計算 x的 m次方
+    public static double power(double x, double m) {
         double result = 1;
-        for(i = 0; i < n; i++) {
-            result = result * x;
+        // 重複乘以 m次 x
+        for(int i = 0; i < m; i++) {
+            result *= x;
         }
         return result;
     }
-    // 再作 x ^ (1/ n)
+
+    // root函數計算 x的 (1/n)次方
     public static double root(double x, double n) {
-        double left, right, mid;
+        // 依據傳入的 x設定左右邊界
+        double left,right;
         if(x >= 1) {
             left = 1;
             right = x;
         } else {
-            left = 0;
-            right = x;
+            left = x;
+            right = 1;
         }
-        mid = (left + right) / 2;
-        while(mid > left && mid < right) {
-            if(power(mid, n) > x) {
+        double mid = (left + right) / 2;
+        // 取兩邊界之中間值不斷乘以 n次方，並調整左右邊界，以取得近似值
+        while (mid > left && mid < right) {
+            if (power(mid, n) > x) {
                 right = mid;
-            } else if(power(mid, n) < x) {
+            } else if (power(mid, n) < x) {
                 left = mid;
             } else {
                 return mid;
@@ -103,9 +101,6 @@ public class Eval{
             mid = (left + right) / 2;
         }
         return mid;
-    }
-    public static double expp(double x,double n,double m) {
-        return power(root(x, n), m);
     }
 
     // function_階乘
@@ -133,17 +128,17 @@ public class Eval{
         Stack_1 op = new Stack_1();
         String y;
         for(int i=0; i<data.length; i++){
-            //read in next data x
+            // read in next data x
             String x = data[i];
             if(x.equals(")")){
                 while(!op.isEmpty() && !(y=op.pop()).equals("(")){
                     cal(y, number);
                 }
             } else if(opid(x)==-1){
-                //x is a number
+                // x is a number
                 number.push(x);
             } else{
-                //x is a operator
+                // x is a operator
                 while(!op.isEmpty() && isp[opid(op.peek())] >= icp[opid(x)]){
                     cal(op.pop(), number);
                 }
@@ -157,15 +152,17 @@ public class Eval{
     }
 
     public static void main(String[] argv){
+        String[] data0 = {"factorial","(","expp","(","reverse","(","30",")",",","2",",","1",")",")"};
+        eval(data0);
         String[] data1 = {"4","*","(","2","+","3",")","+","3","^","2"};
-        String[] data2 = {"199","%","10","-","(","-1",")","+","expp","(","5",",","2",",","3",")"};
-        String[] data3 = {"reverse","(","200",")","*","factorial","(","5",")","/","(","10","%","6",")","-","8"};
-        String[] data4 = {"4","-","reverse","(","123",")","/","6","+","37","%","3","+","45","+","factorial","(","0",")"};
-        String[] data5 = {"expp", "(", "factorial", "(", "reverse", "(", "21", ")", ")", ",", "2", "+", "3", ",", "2", ")"};
         eval(data1);
+        String[] data2 = {"199","%","10","-","(","-1",")","+","expp","(","5",",","2",",","3",")"};
         eval(data2);
+        String[] data3 = {"reverse","(","200",")","*","factorial","(","5",")","/","(","10","%","6",")","-","8"};
         eval(data3);
+        String[] data4 = {"4","-","reverse","(","123",")","/","6","+","37","%","3","+","45","+","factorial","(","0",")"};
         eval(data4);
+        String[] data5 = {"expp", "(", "factorial", "(", "reverse", "(", "21", ")", ")", ",", "2", "+", "3", ",", "2", ")"};
         eval(data5);
     }
 }
