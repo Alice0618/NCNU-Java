@@ -1,4 +1,4 @@
-public class Matrix {
+public class magicMatrix {
     public static int[][] magicOdd(int n) {
         int[][] square = new int[n + 1][n + 1];
 
